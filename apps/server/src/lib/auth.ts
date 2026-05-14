@@ -26,6 +26,7 @@ export const auth = betterAuth({
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
+      domain: process.env.DOMAIN || 'localhost',
     },
     database: {
       generateId: false,

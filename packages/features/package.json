@@ -14,6 +14,7 @@
     "vite": "^8.0.13"
   },
   "exports": {
-    "./lib/*": "./src/lib/*"
+    "./lib/*": "./src/lib/*",
+    "./auth/*": "./src/auth/*"
   }
 }

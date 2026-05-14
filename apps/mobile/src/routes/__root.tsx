@@ -1,14 +1,19 @@
+import type { AuthSession } from '@kashin/features/lib/auth-client'
 import '@kashin/ui/globals.css'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
-export const Route = createRootRoute({
+interface AuthState {
+  user: AuthSession['user'] | null
+}
+
+interface RouterContext {
+  auth: AuthState
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
 })
 
 function RootComponent() {
-  return (
-    <>
-      <Outlet />
-    </>
-  )
+  return <Outlet />
 }
