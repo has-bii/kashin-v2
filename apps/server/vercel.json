@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "node",
   "outputDirectory": "dist",
-  "installCommand": "cd ../.. && bun install && bun run --filter @kashin/database db:generate",
+  "installCommand": "cd ../.. && bun install && bun run --filter @kashin/database db:generate && bun run --filter @kashin/database db:deploy",
   "buildCommand": "bun run build"
 }
