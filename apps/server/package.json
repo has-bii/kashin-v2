@@ -6,8 +6,9 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "hono": "^4.12.18",
-    "@kashin/database": "workspace:*"
+    "@kashin/database": "workspace:*",
+    "dotenv": "^17.4.2",
+    "hono": "^4.12.18"
   },
   "devDependencies": {
     "@types/bun": "latest"

@@ -4,7 +4,15 @@ import { Pool } from 'pg'
 
 import { PrismaClient } from './generated/prisma/client'
 
-const pool = new Pool({ connectionString: process.env.POSTGRES_URL })
+import 'dotenv/config'
+
+const DATABASE_URL = process.env.DATABASE_URL
+
+if (!DATABASE_URL) {
+  throw new Error('DATABASE_URL is not set')
+}
+
+const pool = new Pool({ connectionString: DATABASE_URL })
 
 if (process.env.NODE_ENV === 'production') {
   attachDatabasePool(pool)
