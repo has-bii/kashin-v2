@@ -24,6 +24,7 @@ generated: 2026-05-14T00:00:00.000Z
 | Naming, imports, style, testing | `.agent/CONVENTIONS.md` |
 | Scripts & how to run things | `.agent/SCRIPTS.md` |
 | App entry points & public APIs | `.agent/ENTRYPOINTS.md` |
+| UI design language & visual guidelines | `DESIGN.md` |
 
 ## Stack
 
