@@ -3,14 +3,6 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-
-    "lib": ["ESNext"],
-    "module": "ESNext",
-
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-
     "paths": {
       "@kashin/database/*": ["../../packages/database/src/*"],
     },

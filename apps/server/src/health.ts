@@ -1,4 +1,4 @@
-import { prisma } from '@kashin/database'
+import { prisma } from '@kashin/database/index'
 import { Hono } from 'hono'
 
 const health = new Hono()
