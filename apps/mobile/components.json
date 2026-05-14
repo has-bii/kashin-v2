@@ -17,7 +17,7 @@
     "hooks": "@/hooks",
     "lib": "@/lib",
     "utils": "@kashin/ui/lib/utils",
-    "ui": "@kashin/ui/components"
+    "ui": "@kashin/ui/components/ui"
   },
   "menuColor": "default",
   "menuAccent": "subtle",
