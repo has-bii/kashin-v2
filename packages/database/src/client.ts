@@ -1,12 +1,17 @@
 import { PrismaPg } from '@prisma/adapter-pg'
+import { attachDatabasePool } from '@vercel/functions'
+import { Pool } from 'pg'
 
 import { PrismaClient } from './generated/prisma/client'
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
-})
+const pool = new Pool({ connectionString: process.env.POSTGRES_URL })
 
-// Use globalThis for broader environment compatibility
+if (process.env.NODE_ENV === 'production') {
+  attachDatabasePool(pool)
+}
+
+const adapter = new PrismaPg(pool)
+
 const globalForPrisma = globalThis as typeof globalThis & {
   prisma?: PrismaClient
 }
