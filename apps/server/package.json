@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@kashin/database": "workspace:*",
+    "better-auth": "^1.6.11",
     "dotenv": "^17.4.2",
     "hono": "^4.12.18"
   },

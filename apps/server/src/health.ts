@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-import withPrisma from './lib/prisma'
+import { withPrisma } from './lib/prisma'
 import { ContextWithPrisma } from './types'
 
 const health = new Hono<ContextWithPrisma>()
