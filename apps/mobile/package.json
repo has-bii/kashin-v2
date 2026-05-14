@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@kashin/ui": "workspace:*",
+    "@kashin/features": "workspace:*",
     "@tabler/icons-react": "^3.44.0",
     "@tanstack/react-router": "latest",
     "react": "^19.2.6",

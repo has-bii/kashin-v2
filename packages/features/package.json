@@ -1,0 +1,19 @@
+{
+  "name": "@kashin/features",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "better-auth": "^1.6.11",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "vite": "^8.0.13"
+  },
+  "exports": {
+    "./lib/*": "./src/lib/*"
+  }
+}
