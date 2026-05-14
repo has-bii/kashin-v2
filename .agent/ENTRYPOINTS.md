@@ -1,57 +1,43 @@
 ---
-generated: 2026-05-14T00:00:00.000Z
+generated: 2026-05-15T00:00:00.000Z
 ---
 
 # Entry Points
 
 ## Application Entry Points
 
-### server (Hono API)
-- **Entry**: `apps/server/src/index.ts`
+### server (apps/server)
+- **File**: `src/index.ts`
 - **Framework**: Hono
-- **Runtime**: Bun (with `--hot` for dev)
-- **Default port**: Not explicitly set (Bun default or set via env)
-- **How to start**: `bun run --filter server dev` or `bun dev` (root)
-- **Route groups**:
-  - `/health` — health check endpoints (`/health`, `/health/database`)
-  - `/api/auth` — better-auth handler (all methods on `/*`)
-  - `/` — root greeting
+- **Start**: `bun run --hot src/index.ts` (dev) or `bun dist/index.js` (prod)
+- **Creates**: Hono app via `createApp(config)` factory
+- **Routes**: `/health`, `/api/auth/*`, `/`
 
-### mobile (React SPA)
-- **Entry**: `apps/mobile/src/main.tsx`
-- **Framework**: React 19 + TanStack Router + Vite
-- **How to start**: `bun run --filter mobile dev` or `bun dev` (root)
-- **Port**: 5173
-- **Routing**: File-based via TanStack Router (`src/routes/`)
-- **Current routes**:
-  - `/` — Home page (shows auth session info)
-  - `__root.tsx` — Root layout (imports `@kashin/ui/globals.css`)
+### mobile (apps/mobile)
+- **File**: `src/main.tsx`
+- **Framework**: React 19 + Vite + TanStack Router
+- **Start**: `vite dev --port 5173`
+- **Router**: `src/router.tsx` → `routeTree.gen.ts` (auto-generated)
+- **Route files**: `src/routes/__root.tsx`, `src/routes/login.tsx`, `src/routes/_authenticated.tsx`, etc.
 
 ## Library Public APIs
 
 ### @kashin/database
-- **Entry**: `packages/database/src/index.ts`
-- **Exports**:
-  - `prisma` — Singleton PrismaClient instance
-  - All Prisma generated types via `./generated/prisma/client`
-- **Sub-path**: `@kashin/database/client` → `src/client.ts` (raw client, usually not needed directly)
+- **Entry**: `src/index.ts` → re-exports `prisma` from `./client` + all from `./generated/prisma/client`
+- **Client entry**: `src/client.ts` → singleton PrismaClient with pg adapter
+- **Exports map**: `"."` → `./src/index.ts`, `"./client"` → `./src/client.ts`
 
 ### @kashin/features
-- **Entry**: `packages/features/src/lib/*` (wildcard export)
-- **Exports**:
-  - `@kashin/features/lib/auth-client` → `authClient` (better-auth React client with `useSession` hook)
+- **Exports map**: `"./lib/*"` → `./src/lib/*`, `"./auth/*"` → `./src/auth/*`
+- **Key exports**: `authClient` from `@kashin/features/lib/auth-client`, `LoginPage` from `@kashin/features/auth/components/LoginPage`
 
 ### @kashin/ui
-- **Entry**: Multiple sub-path exports
-- **Exports**:
-  - `@kashin/ui/globals.css` — Global Tailwind styles
-  - `@kashin/ui/lib/utils` → `cn()` helper (clsx + tailwind-merge)
-  - `@kashin/ui/components/ui/*` — UI components (currently: `Button`)
-  - `@kashin/ui/components/*` — Top-level components
-  - `@kashin/ui/hooks/*` — Custom React hooks
+- **Exports map**: `"./globals.css"`, `"./lib/*"`, `"./components/*"`, `"./components/ui/*"`, `"./hooks/*"`
+- **Key exports**: `cn` from `@kashin/ui/lib/utils`, `Button`, `Card`, `Input`, `Label`, `Alert` from `@kashin/ui/components/ui/*`
+- **Styles**: `@kashin/ui/globals.css` — Tailwind v4 + shadcn theme variables
 
 ## CLI Tools
-None detected — no `bin` fields in any package.json.
+None.
 
 ## Background Jobs / Workers
-None detected.
+None.

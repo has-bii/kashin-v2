@@ -1,58 +1,59 @@
 ---
-generated: 2026-05-14T00:00:00.000Z
+generated: 2026-05-15T00:00:00.000Z
 refresh_after: 7d
 ---
 
 # Architecture
 
 ## Project Type
-Bun monorepo — 5 packages total: 2 apps (mobile, server), 3 libraries (database, features, ui)
+Bun monorepo — 5 packages, 2 apps (server + mobile web), 3 libraries (database, features, ui).
 
 ## Repository Layout
 ```
 kashin-v2/
 ├── apps/
-│   ├── mobile/          # React SPA (TanStack Router + Vite + Tailwind v4)
-│   └── server/          # Hono API server (Bun runtime)
+│   ├── server/          # Hono API server (auth, health)
+│   └── mobile/          # React + Vite web app (TanStack Router)
 ├── packages/
-│   ├── database/        # Prisma ORM + PostgreSQL adapter
-│   ├── features/        # Feature modules (auth client)
-│   └── ui/              # Shared UI components (Radix + shadcn + Tailwind)
-├── .agent/              # Agent documentation (this folder)
+│   ├── database/        # Prisma client + schema (PostgreSQL)
+│   ├── features/        # Shared feature modules (auth pages, clients)
+│   └── ui/              # Shared UI kit (shadcn/radix-vega components)
+├── CLAUDE.md            # Agent auto-load
+├── DESIGN.md            # Design system guide
 ├── package.json         # Root workspace config
-├── tsconfig.json        # Shared TypeScript config
-└── bun.lock             # Bun lockfile (binary)
+└── tsconfig.json        # Root TS config
 ```
 
 ## Data Flow
 ```
-mobile (React SPA)
-  → @kashin/features (auth client)
-    → server (Hono API, port 3000)
-      → @kashin/database (Prisma + PostgreSQL)
-      → better-auth (session management)
-
-mobile (React SPA)
-  → @kashin/ui (shared components, Tailwind v4)
+mobile (React/Vite) ──HTTP──> server (Hono) ──Prisma──> PostgreSQL
+       │                           │
+       ├── @kashin/ui              └── @kashin/database
+       └── @kashin/features              └── pg adapter
 ```
+
+- **mobile** → imports `@kashin/ui` (components), `@kashin/features` (auth pages, auth client)
+- **server** → imports `@kashin/database` (prisma client)
+- **features** → imports `@kashin/ui` (components for auth pages)
+- **database** → standalone Prisma + pg, no internal deps
 
 ## Key Abstractions
 
-1. **Server AppContext** (`apps/server/src/types.ts`) — Hono context with typed variables: `user`, `session`, `prisma`. All routes use this.
-
-2. **Prisma Singleton** (`packages/database/src/client.ts`) — Single PrismaClient instance with `globalThis` dedup for dev hot-reload. Uses `PrismaPg` adapter with connection pooling. Vercel `attachDatabasePool` in production.
-
-3. **Session Middleware** (`apps/server/src/middleware/session.ts`) — Injects `user`/`session` from better-auth into every request. `require-session.ts` provides auth-gating middleware.
-
-4. **Better-Auth** (`apps/server/src/lib/auth.ts`) — Auth provider with Prisma adapter. Google OAuth + cookie-based sessions (5 min cache, cross-subdomain cookies).
-
-5. **Auth Client** (`packages/features/src/lib/auth-client.ts`) — Client-side auth hooks via `better-auth/react`. Consumed by mobile app.
-
-6. **UI Component Library** (`packages/ui/`) — shadcn-based components using Radix primitives, class-variance-authority for variants, Tailwind v4 for styling.
+| Concept | Where | What |
+|---------|-------|------|
+| `AppContext` | `apps/server/src/types.ts` | Hono typed context with user, session, prisma |
+| `auth` | `apps/server/src/lib/auth.ts` | better-auth server instance (Google OAuth, cookie sessions) |
+| `authClient` | `packages/features/src/lib/auth-client.ts` | better-auth React client for mobile |
+| `prisma` | `packages/database/src/client.ts` | Singleton PrismaClient with pg adapter + Vercel pool attach |
+| `createApp` | `apps/server/src/app.ts` | Factory fn: Hono app with CORS, logger, prisma, session middleware |
+| `cn()` | `packages/ui/src/lib/utils.ts` | `clsx` + `twMerge` utility for class merging |
 
 ## External Integrations
-| Integration | Package | Purpose |
-|-------------|---------|---------|
-| PostgreSQL | @kashin/database | Primary datastore |
-| Google OAuth | server (better-auth) | Social login |
-| Vercel serverless | @kashin/database | Connection pooling in production |
+
+| Integration | Owner Package | Details |
+|-------------|---------------|---------|
+| PostgreSQL | `@kashin/database` | Prisma ORM, pg driver, Vercel pool in prod |
+| Google OAuth | `apps/server` | better-auth social provider |
+| Vercel Functions | `@kashin/database` | `@vercel/functions` pool attach in production |
+| shadcn/ui | `packages/ui` | radix-vega style, tabler icons, neutral base |
+| Tailwind CSS v4 | `packages/ui`, `apps/mobile` | CSS-first config via `globals.css` |

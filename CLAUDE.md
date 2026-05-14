@@ -1,5 +1,5 @@
 ---
-generated: 2026-05-14T00:00:00.000Z
+generated: 2026-05-15T00:00:00.000Z
 ---
 
 # Claude Code — Project Context
@@ -33,14 +33,17 @@ generated: 2026-05-14T00:00:00.000Z
 - **Install**: `bun install` — never `npm install`
 - **Test**: `bun test` / `vitest run`
 - **Workspace filter**: `bun run --filter <pkg> <script>`
+- **Server**: Hono + better-auth + Prisma (PostgreSQL)
+- **Mobile**: React 19 + Vite + TanStack Router + shadcn/ui
+- **UI**: Tailwind v4, radix-vega, Tabler icons, Inter font
 
 ## Do Not
 
 - Read `bun.lock` (binary)
-- Read `.env` files (no `.env.example` exists — check `CONVENTIONS.md` for env var surface area)
+- Read `.env` files (no `.env.example` — check `CONVENTIONS.md` for env var surface area)
 - Re-explore directories already documented in `.agent/`
 - Run `npm` or `yarn` commands — this project uses Bun exclusively
 
 ## Docs Last Generated
 
-2026-05-14 — re-run codebase-cartographer skill if stale (> 7 days).
+2026-05-15 — re-run codebase-cartographer skill if stale (> 7 days).

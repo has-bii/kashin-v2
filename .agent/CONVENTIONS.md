@@ -1,61 +1,52 @@
 ---
-generated: 2026-05-14T00:00:00.000Z
+generated: 2026-05-15T00:00:00.000Z
 ---
 
 # Conventions
 
 ## File & Folder Naming
-- **Source files**: `camelCase` (e.g., `auth-client.ts`, `routeTree.gen.ts`)
-- **React components**: `PascalCase` (e.g., `RootComponent`, `Button`)
-- **Route files**: file-based routing under `src/routes/` (e.g., `__root.tsx`, `index.tsx`)
-- **Middleware**: `camelCase.ts` (e.g., `session.ts`, `require-session.ts`)
-- **Generated code**: `generated/` subfolder (Prisma output)
+- Source files: `kebab-case` (`auth-client.ts`, `require-session.ts`)
+- React components: `PascalCase` files (`LoginPage.tsx`, `CardHeader.tsx`)
+- Directories: `kebab-case` (`middleware/`, `routes/auth`)
+- shadcn components: `kebab-case` in `src/components/ui/` (`button.tsx`, `card.tsx`)
+- Feature modules: `kebab-case` dirs (`auth/components/`)
 
 ## Import Paths
-- **Internal imports**: Relative paths (no workspace path aliases defined in tsconfig)
-- **Workspace packages**: `@kashin/*` (resolved via Bun workspaces)
-- **No absolute `@app/*` aliases** — tsconfig.json has no `paths` field
+- **server**: `@kashin/database/*` → `../../packages/database/src/*`
+- **mobile**: `@/*` → `./src/*`, `@kashin/ui/*`, `@kashin/features/*`
+- **features**: `@kashin/features/*` → `./src/*`, `@kashin/ui/*` → `../ui/src/*`
+- **ui**: `@kashin/ui/*` → `./src/*`
+- Workspace deps use `workspace:*` protocol
 
 ## TypeScript
-- **Strict mode**: Yes — `strict: true`
-- **Target**: ES2022
-- **Module**: ESNext with bundler resolution
-- **NoUnusedLocals/Parameters**: Enabled
-- **NoImplicitReturns/NoFallthroughCasesInSwitch**: Enabled
-- **Shared tsconfig**: Root `tsconfig.json` — no per-package tsconfig files found
+- Strict mode across all packages
+- Target: ES2022 (mobile), ESNext (server, database, features, ui)
+- Module: ESNext / Preserve, bundler resolution
+- Root tsconfig: noUnusedLocals, noUnusedParameters, noImplicitReturns
+- Server: no extra lint flags
+- Database/features/ui: noUncheckedIndexedAccess, noImplicitOverride
 
 ## Testing
-- **Runner**: Vitest (mobile app has `vitest run` script)
-- **File pattern**: `*.test.ts` or `*.spec.ts` (standard Vitest defaults)
-- **Server app**: No test script configured
+- **mobile**: Vitest (`vitest run`)
+- **server/database/features/ui**: no test scripts yet
+- Test file pattern: not established
 
 ## Code Style
-- **Formatter**: Prettier (root `package.json` has `@trivago/prettier-plugin-sort-imports`)
-- **Linter**: ESLint (mobile app has `eslint.config.js`)
-- **Server app**: No ESLint configured — only Prettier
-- **No biome.json** — not using Biome
+- **Formatter**: Prettier with `@trivago/prettier-plugin-sort-imports` + `prettier-plugin-tailwindcss`
+- **Linter**: ESLint (mobile only, via `@tanstack/eslint-config`)
+- **No Biome**
+- Format command: `bun run format` (root) or per-package
 
 ## Error Handling
-- **Server**: Thrown errors handled by Hono `onError` handler → returns `err.message` as 500 text
-- **Auth**: HTTPException with 401 for missing sessions
-- **Database**: Errors logged to console, returned as JSON `{ status: 'down' }`
-- **Client**: No global error boundary detected — component-level error handling only
+- Server: Hono `app.onError` → text response with err.message
+- Auth: `HTTPException(401)` via `requireSession` middleware
+- Database: throws on missing `DATABASE_URL`
 
 ## Environment Variables
-| Variable | Used in | Purpose |
-|----------|---------|---------|
-| `DATABASE_URL` | @kashin/database | PostgreSQL connection string (required) |
-| `BETTER_AUTH_URL` | server | Auth base URL |
-| `GOOGLE_CLIENT_ID` | server | Google OAuth |
-| `GOOGLE_CLIENT_SECRET` | server | Google OAuth |
-| `MOBILE_URL` | server, @kashin/features | Mobile app origin (default: `http://localhost:5173`) |
-| `DESKTOP_URL` | server | Desktop app origin (default: `http://localhost:5174`) |
-| `VITE_API_URL` | @kashin/features | API base URL for auth client (default: `http://localhost:3000`) |
-| `NODE_ENV` | server, @kashin/database | Environment detection |
-
-**Note**: No `.env.example` file exists. Accessed via `dotenv` or `process.env`.
+- **server**: `BETTER_AUTH_URL`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `MOBILE_URL`, `DESKTOP_URL`, `DOMAIN`, `NODE_ENV`
+- **database**: `DATABASE_URL`, `NODE_ENV`
+- **mobile**: `VITE_API_URL`
+- No `.env.example` — see `config.ts` (server) or source (features)
 
 ## Git
-- **Branch naming**: Not detectable
-- **Commit format**: Not detectable
-- **PR conventions**: Not detectable
+- Branch/commit conventions: not detected

@@ -1,28 +1,30 @@
 ---
-generated: 2026-05-14T00:00:00.000Z
+generated: 2026-05-15T00:00:00.000Z
 ---
 
 # Package Map
 
 | Package | Path | Type | Entry | Purpose |
 |---------|------|------|-------|---------|
-| mobile | apps/mobile/ | app | src/main.tsx | React SPA with TanStack Router, Vite, Tailwind v4 |
-| server | apps/server/ | app | src/index.ts | Hono API server on Bun runtime |
-| @kashin/database | packages/database/ | library | src/index.ts, src/client.ts | Prisma ORM + PostgreSQL adapter, DB singleton |
-| @kashin/features | packages/features/ | library | src/lib/* | Feature modules — currently auth client hooks |
-| @kashin/ui | packages/ui/ | library | src/lib/*, src/components/* | Shared UI components — shadcn/Radix/Tailwind |
+| server | apps/server | app | src/index.ts | Hono API server — auth routes, health check, session middleware |
+| mobile | apps/mobile | app | src/main.tsx | React web app — TanStack Router, Vite, shadcn UI |
+| @kashin/database | packages/database | library | src/index.ts | Prisma schema + client for PostgreSQL |
+| @kashin/features | packages/features | library | src/ (exports map) | Shared feature modules — auth pages, auth client |
+| @kashin/ui | packages/ui | library | src/globals.css + exports map | Shared UI kit — shadcn components, utils, global styles |
 
 ## Dependency Graph
-- **mobile** → [@kashin/ui, @kashin/features]
-- **server** → [@kashin/database]
-- **@kashin/database** → [prisma, pg, @prisma/adapter-pg, @vercel/functions]
-- **@kashin/features** → [better-auth/react, react]
-- **@kashin/ui** → [radix-ui, class-variance-authority, tailwind-merge, clsx, @tabler/icons-react]
+
+```
+server        → [@kashin/database]
+mobile        → [@kashin/ui, @kashin/features]
+@kashin/features → [@kashin/ui]
+@kashin/ui    → [] (standalone)
+@kashin/database → [] (standalone)
+```
 
 ## Shared Packages
-| Package | Imported by | Purpose |
-|---------|-------------|---------|
-| @kashin/ui | mobile | Shared UI components |
-| @kashin/features | mobile | Auth client hooks |
-| @kashin/database | server | DB access + Prisma types |
-| better-auth | server, @kashin/features | Auth server + client |
+
+| Package | Imported By | Notes |
+|---------|-------------|-------|
+| @kashin/ui | mobile, features | Load-bearing — all UI components live here |
+| @kashin/database | server | Load-bearing — sole data access layer |
