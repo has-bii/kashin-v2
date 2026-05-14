@@ -1,10 +1,9 @@
-import { Hono } from "hono";
-
+import { Hono } from 'hono'
 
 const health = new Hono()
 
-health.get("/", (c) => {
-  return c.json({ status: "up" })
+health.get('/', (c) => {
+  return c.json({ status: 'up' })
 })
 
 export default health

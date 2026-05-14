@@ -19,6 +19,6 @@ app.onError((err, c) => {
   return c.text(err.message, 500)
 })
 
-app.route("/health", health)
+app.route('/health', health)
 
 export default app
