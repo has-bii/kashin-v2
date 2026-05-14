@@ -1,14 +1,16 @@
+import { Button } from '@kashin/ui/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({ component: Home })
 
 function Home() {
   return (
-    <div className="p-8">
+    <div className="p-8 space-y-4">
       <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg">
+      <p className="text-lg">
         Edit <code>src/routes/index.tsx</code> to get started.
       </p>
+      <Button>Testing</Button>
     </div>
   )
 }
