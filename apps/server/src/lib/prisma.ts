@@ -1,4 +1,4 @@
-import { prisma } from '@kashin/database/client'
+import { prisma } from '@kashin/database'
 import { Context, Next } from 'hono'
 
 function withPrisma(c: Context, next: Next) {
