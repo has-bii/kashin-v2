@@ -1,6 +1,6 @@
 import { authClient } from '@kashin/features/lib/auth-client'
-import { Button } from '@kashin/ui/components/ui/button'
 import { Alert, AlertDescription } from '@kashin/ui/components/ui/alert'
+import { Button } from '@kashin/ui/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@kashin/ui/components/ui/card'
 import { IconLoader } from '@tabler/icons-react'
 
@@ -56,13 +56,14 @@ export function LoginPage({ error }: Props) {
   return (
     <div className="bg-accent/40 flex min-h-svh items-center justify-center p-4">
       <Card className="w-full max-w-sm">
-        <CardHeader className="items-center text-center">
-          <div className="bg-primary text-primary-foreground flex h-11 w-11 items-center justify-center rounded-xl text-lg font-semibold shadow-sm">
-            K
-          </div>
-          <div className="mt-2 flex flex-col gap-1">
-            <h1 className="text-xl font-semibold tracking-tight">Welcome to Kashin</h1>
-            <p className="text-muted-foreground text-sm">Sign in to your account to continue</p>
+        <CardHeader>
+          <div className="flex flex-col items-center justify-center">
+            <img src="/logo.svg" alt="Kashin Logo" className="h-10 w-auto" />
+
+            <div className="mt-4 flex flex-col gap-1 text-center">
+              <h1 className="text-xl font-semibold tracking-tight">Welcome to Kashin</h1>
+              <p className="text-muted-foreground text-sm">Sign in to your account to continue</p>
+            </div>
           </div>
         </CardHeader>
 
