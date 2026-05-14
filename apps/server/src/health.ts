@@ -1,15 +1,14 @@
 import { Hono } from 'hono'
 
-import { withPrisma } from './lib/prisma'
-import { ContextWithPrisma } from './types'
+import { AppContext } from './types'
 
-const health = new Hono<ContextWithPrisma>()
+const health = new Hono<AppContext>()
 
 health.get('/', (c) => {
   return c.json({ status: 'up' })
 })
 
-health.get('/database', withPrisma, async (c) => {
+health.get('/database', async (c) => {
   try {
     const prisma = c.get('prisma')
     await prisma.$queryRaw`SELECT 1`
