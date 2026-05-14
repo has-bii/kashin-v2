@@ -24,6 +24,7 @@
     "baseUrl": ".",
     "paths": {
       "@kashin/features/*": ["./src/*"],
+      "@kashin/ui/*": ["../ui/src/*"],
     },
 
     // Some stricter flags (disabled by default)
