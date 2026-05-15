@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 
-import { AppContext } from './types'
+import { AppContext } from '@/types'
 
 const health = new Hono<AppContext>()
 

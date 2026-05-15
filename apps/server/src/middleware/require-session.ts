@@ -1,17 +1,17 @@
-import { Context, MiddlewareHandler } from 'hono'
+import { createMiddleware } from 'hono/factory'
 import { HTTPException } from 'hono/http-exception'
 
-import { AppContext } from '../types'
+import { auth } from '@/lib/auth'
+import { AppContext } from '@/types'
 
-export function requireSession(): MiddlewareHandler<AppContext> {
-  return async (c: Context<AppContext>, next) => {
-    const user = c.get('user')
-    const session = c.get('session')
+export const requireSession = createMiddleware<AppContext>(async (c, next) => {
+  const session = await auth.api.getSession({ headers: c.req.raw.headers })
 
-    if (!user || !session) {
-      throw new HTTPException(401, { message: 'Unauthorized' })
-    }
-
-    await next()
+  if (!session) {
+    throw new HTTPException(401, { message: 'Unauthorized' })
   }
-}
+
+  c.set('user', session.user)
+  c.set('session', session.session)
+  await next()
+})

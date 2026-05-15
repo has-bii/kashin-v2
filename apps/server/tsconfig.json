@@ -4,12 +4,16 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
 
+    "skipLibCheck": true,
+
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
 
+    "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@kashin/database/*": ["../../packages/database/src/*"],
     },
   },

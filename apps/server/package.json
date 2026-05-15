@@ -9,6 +9,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.8.0",
     "@kashin/database": "workspace:*",
     "better-auth": "^1.6.11",
     "dotenv": "^17.4.2",

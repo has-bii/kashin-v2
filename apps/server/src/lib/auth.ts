@@ -1,9 +1,8 @@
+import { prisma } from '@kashin/database/client'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { betterAuth } from 'better-auth/minimal'
 
 import 'dotenv/config'
-
-import { prisma } from '../lib/prisma'
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL as string,

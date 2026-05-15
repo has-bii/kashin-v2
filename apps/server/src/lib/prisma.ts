@@ -8,4 +8,4 @@ function withPrisma(c: Context, next: Next) {
   return next()
 }
 
-export { withPrisma, prisma }
+export { withPrisma }
