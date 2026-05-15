@@ -18,7 +18,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   return (
     <div className={cn(import.meta.env.DEV && 'bg-black')}>
-      <div className="bg-background mx-auto min-h-dvh max-w-3xl">
+      <div className="bg-background mx-auto flex min-h-dvh max-w-3xl flex-1 flex-col">
         <Outlet />
       </div>
     </div>

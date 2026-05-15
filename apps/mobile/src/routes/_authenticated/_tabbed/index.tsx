@@ -2,7 +2,7 @@ import { authClient } from '@kashin/features/lib/auth-client'
 import { Button } from '@kashin/ui/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_authenticated/')({
+export const Route = createFileRoute('/_authenticated/_tabbed/')({
   component: Home,
 })
 
@@ -20,7 +20,7 @@ function Home() {
   }
 
   return (
-    <div className="p-8 space-y-4">
+    <div className="space-y-4 p-8">
       <h1 className="text-4xl font-bold">Welcome to Kashin</h1>
       {auth.user && <p>Logged in as {auth.user.name}</p>}
       <Button onClick={handleLogout} variant="destructive">

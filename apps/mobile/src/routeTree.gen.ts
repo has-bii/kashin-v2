@@ -13,7 +13,12 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedTabbedRouteImport } from './routes/_authenticated/_tabbed'
+import { Route as AuthenticatedTabbedIndexRouteImport } from './routes/_authenticated/_tabbed/index'
+import { Route as AuthenticatedTabbedSettingsRouteImport } from './routes/_authenticated/_tabbed/settings'
+import { Route as AuthenticatedTabbedAiSyncRouteImport } from './routes/_authenticated/_tabbed/ai-sync'
+import { Route as AuthenticatedTabbedAddTransactionRouteImport } from './routes/_authenticated/_tabbed/add-transaction'
+import { Route as AuthenticatedTabbedActivityRouteImport } from './routes/_authenticated/_tabbed/activity'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -34,23 +39,60 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedTabbedRoute = AuthenticatedTabbedRouteImport.update({
+  id: '/_tabbed',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedTabbedIndexRoute =
+  AuthenticatedTabbedIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedTabbedRoute,
+  } as any)
+const AuthenticatedTabbedSettingsRoute =
+  AuthenticatedTabbedSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedTabbedRoute,
+  } as any)
+const AuthenticatedTabbedAiSyncRoute =
+  AuthenticatedTabbedAiSyncRouteImport.update({
+    id: '/ai-sync',
+    path: '/ai-sync',
+    getParentRoute: () => AuthenticatedTabbedRoute,
+  } as any)
+const AuthenticatedTabbedAddTransactionRoute =
+  AuthenticatedTabbedAddTransactionRouteImport.update({
+    id: '/add-transaction',
+    path: '/add-transaction',
+    getParentRoute: () => AuthenticatedTabbedRoute,
+  } as any)
+const AuthenticatedTabbedActivityRoute =
+  AuthenticatedTabbedActivityRouteImport.update({
+    id: '/activity',
+    path: '/activity',
+    getParentRoute: () => AuthenticatedTabbedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedIndexRoute
+  '/': typeof AuthenticatedTabbedIndexRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/activity': typeof AuthenticatedTabbedActivityRoute
+  '/add-transaction': typeof AuthenticatedTabbedAddTransactionRoute
+  '/ai-sync': typeof AuthenticatedTabbedAiSyncRoute
+  '/settings': typeof AuthenticatedTabbedSettingsRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof AuthenticatedTabbedIndexRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/activity': typeof AuthenticatedTabbedActivityRoute
+  '/add-transaction': typeof AuthenticatedTabbedAddTransactionRoute
+  '/ai-sync': typeof AuthenticatedTabbedAiSyncRoute
+  '/settings': typeof AuthenticatedTabbedSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -58,20 +100,46 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/_tabbed': typeof AuthenticatedTabbedRouteWithChildren
+  '/_authenticated/_tabbed/activity': typeof AuthenticatedTabbedActivityRoute
+  '/_authenticated/_tabbed/add-transaction': typeof AuthenticatedTabbedAddTransactionRoute
+  '/_authenticated/_tabbed/ai-sync': typeof AuthenticatedTabbedAiSyncRoute
+  '/_authenticated/_tabbed/settings': typeof AuthenticatedTabbedSettingsRoute
+  '/_authenticated/_tabbed/': typeof AuthenticatedTabbedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/privacy' | '/terms'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/privacy'
+    | '/terms'
+    | '/activity'
+    | '/add-transaction'
+    | '/ai-sync'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/privacy' | '/terms' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/privacy'
+    | '/terms'
+    | '/activity'
+    | '/add-transaction'
+    | '/ai-sync'
+    | '/settings'
   id:
     | '__root__'
     | '/_authenticated'
     | '/login'
     | '/privacy'
     | '/terms'
-    | '/_authenticated/'
+    | '/_authenticated/_tabbed'
+    | '/_authenticated/_tabbed/activity'
+    | '/_authenticated/_tabbed/add-transaction'
+    | '/_authenticated/_tabbed/ai-sync'
+    | '/_authenticated/_tabbed/settings'
+    | '/_authenticated/_tabbed/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -111,22 +179,77 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/': {
-      id: '/_authenticated/'
+    '/_authenticated/_tabbed': {
+      id: '/_authenticated/_tabbed'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedTabbedRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/_tabbed/': {
+      id: '/_authenticated/_tabbed/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof AuthenticatedTabbedIndexRouteImport
+      parentRoute: typeof AuthenticatedTabbedRoute
+    }
+    '/_authenticated/_tabbed/settings': {
+      id: '/_authenticated/_tabbed/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedTabbedSettingsRouteImport
+      parentRoute: typeof AuthenticatedTabbedRoute
+    }
+    '/_authenticated/_tabbed/ai-sync': {
+      id: '/_authenticated/_tabbed/ai-sync'
+      path: '/ai-sync'
+      fullPath: '/ai-sync'
+      preLoaderRoute: typeof AuthenticatedTabbedAiSyncRouteImport
+      parentRoute: typeof AuthenticatedTabbedRoute
+    }
+    '/_authenticated/_tabbed/add-transaction': {
+      id: '/_authenticated/_tabbed/add-transaction'
+      path: '/add-transaction'
+      fullPath: '/add-transaction'
+      preLoaderRoute: typeof AuthenticatedTabbedAddTransactionRouteImport
+      parentRoute: typeof AuthenticatedTabbedRoute
+    }
+    '/_authenticated/_tabbed/activity': {
+      id: '/_authenticated/_tabbed/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof AuthenticatedTabbedActivityRouteImport
+      parentRoute: typeof AuthenticatedTabbedRoute
     }
   }
 }
 
+interface AuthenticatedTabbedRouteChildren {
+  AuthenticatedTabbedActivityRoute: typeof AuthenticatedTabbedActivityRoute
+  AuthenticatedTabbedAddTransactionRoute: typeof AuthenticatedTabbedAddTransactionRoute
+  AuthenticatedTabbedAiSyncRoute: typeof AuthenticatedTabbedAiSyncRoute
+  AuthenticatedTabbedSettingsRoute: typeof AuthenticatedTabbedSettingsRoute
+  AuthenticatedTabbedIndexRoute: typeof AuthenticatedTabbedIndexRoute
+}
+
+const AuthenticatedTabbedRouteChildren: AuthenticatedTabbedRouteChildren = {
+  AuthenticatedTabbedActivityRoute: AuthenticatedTabbedActivityRoute,
+  AuthenticatedTabbedAddTransactionRoute:
+    AuthenticatedTabbedAddTransactionRoute,
+  AuthenticatedTabbedAiSyncRoute: AuthenticatedTabbedAiSyncRoute,
+  AuthenticatedTabbedSettingsRoute: AuthenticatedTabbedSettingsRoute,
+  AuthenticatedTabbedIndexRoute: AuthenticatedTabbedIndexRoute,
+}
+
+const AuthenticatedTabbedRouteWithChildren =
+  AuthenticatedTabbedRoute._addFileChildren(AuthenticatedTabbedRouteChildren)
+
 interface AuthenticatedRouteChildren {
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedTabbedRoute: typeof AuthenticatedTabbedRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedTabbedRoute: AuthenticatedTabbedRouteWithChildren,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
