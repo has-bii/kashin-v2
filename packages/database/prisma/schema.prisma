@@ -1,7 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Kashin — Personal Finance Tracker
+// Solo-user, mobile-first, AI email extraction
 
 generator client {
   provider = "prisma-client"
@@ -13,30 +11,34 @@ datasource db {
 }
 
 model User {
-  id            String    @id @db.Uuid @default(uuid(7))
+  id            String       @id @db.Uuid @default(uuid(7))
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean      @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime     @default(now()) @db.Timestamptz
+  updatedAt     DateTime     @updatedAt @db.Timestamptz
   sessions      Session[]
   accounts      Account[]
+  wallets       Wallet[]
+  categories    Category[]
+  transactions  Transaction[]
+  budgets       Budget[]
 
   @@unique([email])
   @@map("user")
 }
 
 model Session {
-  id        String   @id @db.Uuid @default(uuid(7))
-  expiresAt DateTime
+  id        String    @id @db.Uuid @default(uuid(7))
+  expiresAt DateTime  @db.Timestamptz
   token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now()) @db.Timestamptz
+  updatedAt DateTime  @updatedAt @db.Timestamptz
   ipAddress String?
   userAgent String?
-  userId    String   @db.Uuid
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String    @db.Uuid
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
   @@index([userId])
@@ -52,12 +54,12 @@ model Account {
   accessToken           String?
   refreshToken          String?
   idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
+  accessTokenExpiresAt  DateTime? @db.Timestamptz
+  refreshTokenExpiresAt DateTime? @db.Timestamptz
   scope                 String?
   password              String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt             DateTime  @default(now()) @db.Timestamptz
+  updatedAt             DateTime  @updatedAt @db.Timestamptz
 
   @@index([userId])
   @@map("account")
@@ -67,10 +69,109 @@ model Verification {
   id         String   @id @db.Uuid @default(uuid(7))
   identifier String
   value      String
-  expiresAt  DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  expiresAt  DateTime         @db.Timestamptz
+  createdAt  DateTime         @default(now()) @db.Timestamptz
+  updatedAt  DateTime         @updatedAt @db.Timestamptz
 
   @@index([identifier])
   @@map("verification")
+}
+
+// ── Enums ──────────────────────────────
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum BudgetPeriod {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum WalletType {
+  BANK
+  E_WALLET
+}
+
+// ── Wallet ─────────────────────────────
+
+model Wallet {
+  id          String     @id @db.Uuid @default(uuid(7))
+  name        String
+  type        WalletType
+  balance     Decimal    @default(0) @db.Decimal(12, 2)
+  isDefault   Boolean    @default(false)
+  userId      String     @db.Uuid
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  createdAt   DateTime   @default(now()) @db.Timestamptz
+  updatedAt   DateTime   @updatedAt @db.Timestamptz
+
+  @@index([userId])
+  @@map("wallet")
+}
+
+// ── Category ───────────────────────────
+
+model Category {
+  id           String        @id @db.Uuid @default(uuid(7))
+  name         String
+  icon         String?
+  color        String?
+  userId       String        @db.Uuid
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  budgets      Budget[]
+  createdAt    DateTime      @default(now()) @db.Timestamptz
+  updatedAt    DateTime      @updatedAt @db.Timestamptz
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@map("category")
+}
+
+// ── Transaction ────────────────────────
+
+model Transaction {
+  id          String         @id @db.Uuid @default(uuid(7))
+  type        TransactionType
+  amount      Decimal        @db.Decimal(12, 2)
+  description String
+  note        String?
+  date        DateTime       @db.Timestamptz
+  source      String         @default("manual")
+  walletId    String         @db.Uuid
+  wallet      Wallet         @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  categoryId  String         @db.Uuid
+  category    Category       @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  userId      String         @db.Uuid
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime       @default(now()) @db.Timestamptz
+  updatedAt   DateTime       @updatedAt @db.Timestamptz
+
+  @@index([userId, date])
+  @@index([walletId])
+  @@index([categoryId])
+  @@map("transaction")
+}
+
+// ── Budget ─────────────────────────────
+
+model Budget {
+  id         String       @id @db.Uuid @default(uuid(7))
+  amount     Decimal      @db.Decimal(12, 2)
+  period     BudgetPeriod
+  isActive   Boolean      @default(true)
+  categoryId String       @db.Uuid
+  category   Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  userId     String       @db.Uuid
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime     @default(now()) @db.Timestamptz
+  updatedAt  DateTime     @updatedAt @db.Timestamptz
+
+  @@unique([userId, categoryId, period])
+  @@index([userId])
+  @@map("budget")
 }
