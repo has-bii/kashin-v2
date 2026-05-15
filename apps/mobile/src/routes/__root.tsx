@@ -1,5 +1,6 @@
 import type { AuthSession } from '@kashin/features/lib/auth-client'
 import '@kashin/ui/globals.css'
+import { cn } from '@kashin/ui/lib/utils'
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 
 interface AuthState {
@@ -15,5 +16,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 })
 
 function RootComponent() {
-  return <Outlet />
+  return (
+    <div className={cn(import.meta.env.DEV && 'bg-black')}>
+      <div className="bg-background mx-auto min-h-dvh max-w-3xl">
+        <Outlet />
+      </div>
+    </div>
+  )
 }
