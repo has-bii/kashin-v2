@@ -12,7 +12,7 @@
     "test": "bun run --filter '*' test",
     "lint": "bun run --filter '*' lint",
     "typecheck": "bun run --filter '*' typecheck",
-    "format": "prettier --write .",
+    "format": "prettier --write **/*.{ts,tsx}",
     "format:check": "prettier --check .",
     "db:generate": "bun run --filter @kashin/database db:generate",
     "db:migrate": "bun run --filter @kashin/database db:migrate",
