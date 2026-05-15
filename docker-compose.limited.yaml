@@ -5,10 +5,12 @@ services:
       dockerfile: apps/server/Dockerfile
     container_name: kashin-server
     restart: unless-stopped
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     ports:
       - '3000:3000'
     env_file:
-      - ./apps/server/.env
+      - ./apps/server/.env.production.local
     environment:
       - NODE_ENV=production
     deploy:
