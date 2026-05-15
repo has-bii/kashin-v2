@@ -50,8 +50,8 @@ export function BottomNav() {
   const isActive = (path: string) => location.pathname === path
 
   return (
-    <nav className="border-border bg-background fixed bottom-0 z-50 mx-auto h-16 w-full max-w-3xl border-t">
-      <div className="mx-auto flex h-full items-center justify-around">
+    <nav className="border-border bg-background fixed bottom-0 z-50 mx-auto h-20 w-full max-w-3xl border-t">
+      <div className="mx-auto flex h-16 items-center justify-around px-6">
         {tabs.map((tab) => {
           if ('isCenter' in tab) {
             return (
