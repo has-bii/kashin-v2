@@ -5,3 +5,6 @@ build
 prisma/migrations
 generated
 *.md
+.agent
+.agents
+.pi
