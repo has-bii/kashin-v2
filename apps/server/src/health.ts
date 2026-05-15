@@ -4,11 +4,7 @@ import { AppContext } from './types'
 
 const health = new Hono<AppContext>()
 
-health.get('/', (c) => {
-  return c.json({ status: 'up' })
-})
-
-health.get('/database', async (c) => {
+health.get('/', async (c) => {
   try {
     const prisma = c.get('prisma')
     await prisma.$queryRaw`SELECT 1`
