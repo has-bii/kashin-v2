@@ -1,5 +1,5 @@
 ---
-generated: 2026-05-15T00:00:00.000Z
+generated: 2026-05-15T14:50:00.000Z
 ---
 
 ## Project Overview
@@ -39,7 +39,7 @@ Bun monorepo: Hono server, React/Vite mobile, Prisma/PostgreSQL DB, better-auth 
 |---|---|
 | Architecture & data flow | `.agent/ARCHITECTURE.md` |
 | Package map & dependency graph | `.agent/PACKAGES.md` |
-| Naming, imports, style, testing | `.agent/CONVENTIONS.md` |
+| Naming, imports, style rules | `.agent/CONVENTIONS.md` |
 | Scripts & how to run things | `.agent/SCRIPTS.md` |
 | App entry points & public APIs | `.agent/ENTRYPOINTS.md` |
 | UI design language & visual guidelines | `DESIGN.md` |
