@@ -1,7 +1,10 @@
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from '@tanstack/react-router'
 import ReactDOM from 'react-dom/client'
 
 import { AuthProvider, useAuth } from './auth'
+import { queryClient } from './lib/query-client'
 import { router } from './router'
 
 function InnerApp() {
@@ -11,9 +14,12 @@ function InnerApp() {
 
 function App() {
   return (
-    <AuthProvider>
-      <InnerApp />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <InnerApp />
+      </AuthProvider>
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+    </QueryClientProvider>
   )
 }
 

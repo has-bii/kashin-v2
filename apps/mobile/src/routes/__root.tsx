@@ -2,6 +2,7 @@ import type { AuthSession } from '@kashin/features/lib/auth-client'
 import '@kashin/ui/globals.css'
 import { cn } from '@kashin/ui/lib/utils'
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import type { QueryClient } from '@tanstack/react-query'
 
 interface AuthState {
   user: AuthSession['user'] | null
@@ -9,6 +10,7 @@ interface AuthState {
 
 interface RouterContext {
   auth: AuthState
+  queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({

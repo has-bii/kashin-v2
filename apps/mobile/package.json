@@ -15,6 +15,8 @@
     "@kashin/features": "workspace:*",
     "@kashin/ui": "workspace:*",
     "@tabler/icons-react": "^3.44.0",
+    "@tanstack/react-query": "^5.100.10",
+    "@tanstack/react-query-devtools": "^5.100.10",
     "@tanstack/react-router": "latest",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
