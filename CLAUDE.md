@@ -2,6 +2,24 @@
 generated: 2026-05-15T00:00:00.000Z
 ---
 
+## Project Overview
+
+Kashin is an AI-powered personal finance tracker (solo user, mobile-first). AI extracts transactions from user emails, auto-logging them so users don't need to manually input data.
+
+### Key Features
+
+- AI email transaction extraction
+- Category management
+- Budget tracking
+- Bank account overview
+- Reports & analytics
+
+### Tech Stack
+
+Bun monorepo: Hono server, React/Vite mobile, Prisma/PostgreSQL DB, better-auth (Google OAuth).
+
+---
+
 # Claude Code — Project Context
 
 > This project has been fully mapped. Do NOT crawl the source tree from scratch.
