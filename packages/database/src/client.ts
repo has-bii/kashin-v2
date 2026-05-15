@@ -2,9 +2,9 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { attachDatabasePool } from '@vercel/functions'
 import { Pool } from 'pg'
 
-import { PrismaClient } from './generated/prisma/client'
-
 import 'dotenv/config'
+
+import { PrismaClient } from './generated/prisma/client'
 
 const DATABASE_URL = process.env.DATABASE_URL
 

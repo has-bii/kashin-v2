@@ -2,9 +2,9 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 
+import { ServerConfig } from './config'
 import { withPrisma } from './lib/prisma'
 import { injectSession } from './middleware/session'
-import { ServerConfig } from './config'
 import { AppContext } from './types'
 
 export function createApp(config: ServerConfig) {

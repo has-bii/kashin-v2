@@ -4,3 +4,4 @@ build
 *.lock
 prisma/migrations
 generated
+*.md

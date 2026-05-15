@@ -1,11 +1,9 @@
 import { Context } from 'hono'
+
 import { auth } from '../lib/auth'
 import { AppContext } from '../types'
 
-export async function injectSession(
-  c: Context<AppContext>,
-  next: () => Promise<void>,
-) {
+export async function injectSession(c: Context<AppContext>, next: () => Promise<void>) {
   const session = await auth.api.getSession({ headers: c.req.raw.headers })
 
   if (!session) {

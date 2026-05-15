@@ -12,12 +12,13 @@
     "check": "prettier --check ."
   },
   "dependencies": {
-    "@kashin/ui": "workspace:*",
     "@kashin/features": "workspace:*",
+    "@kashin/ui": "workspace:*",
     "@tabler/icons-react": "^3.44.0",
     "@tanstack/react-router": "latest",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "recharts": "^3.8.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",

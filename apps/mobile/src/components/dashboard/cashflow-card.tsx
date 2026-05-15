@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@kashin/ui/components/ui/card'
 import {
+  type ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from '@kashin/ui/components/ui/chart'
 import {
   Select,

@@ -1,5 +1,6 @@
 import { Context, MiddlewareHandler } from 'hono'
 import { HTTPException } from 'hono/http-exception'
+
 import { AppContext } from '../types'
 
 export function requireSession(): MiddlewareHandler<AppContext> {
