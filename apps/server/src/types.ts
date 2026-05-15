@@ -1,11 +1,20 @@
-import type { PrismaClient } from '@kashin/database'
+import type { Hono } from 'hono'
 
-import type { auth } from '@/lib/auth'
+import type { AuthInstance } from '@/lib/auth'
+
+type SessionData = AuthInstance['$Infer']['Session']
 
 export type AppContext = {
   Variables: {
-    user: typeof auth.$Infer.Session.user
-    session: typeof auth.$Infer.Session.session
-    prisma: PrismaClient
+    user: SessionData['user']
+    session: SessionData['session']
   }
+}
+
+// Hono generic params are covariant — sub-apps with typed context
+// aren't assignable to the base Hono type. Use unknown to accept all.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface AppModule {
+  path: string
+  router: Hono<any, any, any>
 }

@@ -2,37 +2,38 @@ import { prisma } from '@kashin/database/client'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { betterAuth } from 'better-auth/minimal'
 
-import 'dotenv/config'
+import type { AuthConfig } from '@/config'
 
-export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL as string,
-  database: prismaAdapter(prisma, {
-    provider: 'postgresql',
-  }),
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+export function createAuth(config: AuthConfig) {
+  return betterAuth({
+    baseURL: config.baseURL,
+    database: prismaAdapter(prisma, {
+      provider: 'postgresql',
+    }),
+    socialProviders: {
+      google: {
+        clientId: config.googleClientId,
+        clientSecret: config.googleClientSecret,
+      },
     },
-  },
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60, // 5 minutes
-      strategy: 'compact',
+    session: {
+      cookieCache: {
+        enabled: true,
+        maxAge: config.cookieCacheMaxAge,
+        strategy: 'compact',
+      },
     },
-  },
-  advanced: {
-    crossSubDomainCookies: {
-      enabled: true,
-      domain: process.env.DOMAIN || 'localhost',
+    advanced: {
+      crossSubDomainCookies: {
+        enabled: true,
+        domain: config.domain,
+      },
+      database: {
+        generateId: false,
+      },
     },
-    database: {
-      generateId: false,
-    },
-  },
-  trustedOrigins: [
-    process.env.MOBILE_URL || 'http://localhost:5173',
-    process.env.DESKTOP_URL || 'http://localhost:5174',
-  ],
-})
+    trustedOrigins: config.trustedOrigins,
+  })
+}
+
+export type AuthInstance = ReturnType<typeof createAuth>

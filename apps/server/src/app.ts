@@ -2,10 +2,10 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 
-import { ServerConfig } from '@/config'
-import { withPrisma } from '@/lib/prisma'
+import type { ServerConfig } from '@/config'
+import type { AppModule } from '@/types'
 
-export function createApp(config: ServerConfig) {
+export function createApp(config: ServerConfig, modules: AppModule[]) {
   const app = new Hono()
 
   app.use(logger())
@@ -21,11 +21,12 @@ export function createApp(config: ServerConfig) {
     }),
   )
 
-  // Global middleware — available on every route
-  app.use(withPrisma)
-
   app.notFound((c) => c.text('Not Found', 404))
   app.onError((err, c) => c.text(err.message, 500))
+
+  for (const { path, router } of modules) {
+    app.route(path, router)
+  }
 
   return app
 }

@@ -1,18 +1,19 @@
 import { Hono } from 'hono'
 
-import { AppContext } from '@/types'
+import { prisma } from '@kashin/database'
 
-const health = new Hono<AppContext>()
+export function createHealthModule() {
+  const router = new Hono()
 
-health.get('/', async (c) => {
-  try {
-    const prisma = c.get('prisma')
-    await prisma.$queryRaw`SELECT 1`
-    return c.json({ status: 'up' })
-  } catch (e) {
-    console.error(e)
-    return c.json({ status: 'down' }, 500)
-  }
-})
+  router.get('/', async (c) => {
+    try {
+      await prisma.$queryRaw`SELECT 1`
+      return c.json({ status: 'up' })
+    } catch (e) {
+      console.error(e)
+      return c.json({ status: 'down' }, 500)
+    }
+  })
 
-export default health
+  return { path: '/health' as const, router }
+}

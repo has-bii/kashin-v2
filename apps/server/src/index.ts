@@ -2,17 +2,21 @@ import 'dotenv/config'
 
 import { createApp } from '@/app'
 import { loadConfig } from '@/config'
-import authRouter from '@/modules/auth'
-import category from '@/modules/category'
-import health from '@/modules/health'
+import { createAuth } from '@/lib/auth'
+import { createSessionGuard } from '@/middleware/require-session'
+import { createAuthModule } from '@/modules/auth'
+import { createCategoryModule } from '@/modules/category'
+import { createHealthModule } from '@/modules/health'
 
 const config = loadConfig()
-const app = createApp(config)
+const auth = createAuth(config.auth)
+const sessionGuard = createSessionGuard(auth)
 
-// Mount route groups
-app.route('/health', health)
-app.route('/api/auth', authRouter)
-app.route('/category', category)
+const app = createApp(config, [
+  createAuthModule(auth),
+  createHealthModule(),
+  createCategoryModule(sessionGuard),
+])
 
 app.get('/', (c) => c.text('Hello Hono!'))
 

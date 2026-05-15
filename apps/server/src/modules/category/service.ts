@@ -1,17 +1,17 @@
-import { PrismaClient } from '@kashin/database'
+import { prisma } from '@kashin/database'
 import { HTTPException } from 'hono/http-exception'
 
 import type { CreateCategoryInput, UpdateCategoryInput } from './schemas'
 
 export abstract class CategoryService {
-  static async list(userId: string, prisma: PrismaClient) {
+  static async list(userId: string) {
     return prisma.category.findMany({
       where: { userId },
       orderBy: { name: 'asc' },
     })
   }
 
-  static async create(userId: string, data: CreateCategoryInput, prisma: PrismaClient) {
+  static async create(userId: string, data: CreateCategoryInput) {
     return prisma.category
       .create({
         data: { ...data, userId },
@@ -24,7 +24,7 @@ export abstract class CategoryService {
       })
   }
 
-  static async update(userId: string, id: string, data: UpdateCategoryInput, prisma: PrismaClient) {
+  static async update(userId: string, id: string, data: UpdateCategoryInput) {
     return prisma.category
       .update({
         where: { id, userId },
@@ -41,7 +41,7 @@ export abstract class CategoryService {
       })
   }
 
-  static async delete(userId: string, id: string, prisma: PrismaClient) {
+  static async delete(userId: string, id: string) {
     return prisma.category
       .delete({
         where: { id, userId },

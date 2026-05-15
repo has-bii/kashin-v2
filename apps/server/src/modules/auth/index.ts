@@ -1,11 +1,13 @@
 import { Hono } from 'hono'
 
-import { auth } from '@/lib/auth'
+import type { AuthInstance } from '@/lib/auth'
 
-const router = new Hono()
+export function createAuthModule(auth: AuthInstance) {
+  const router = new Hono()
 
-router.on(['POST', 'GET'], '/*', (c) => {
-  return auth.handler(c.req.raw)
-})
+  router.on(['POST', 'GET'], '/*', (c) => {
+    return auth.handler(c.req.raw)
+  })
 
-export default router
+  return { path: '/api/auth' as const, router }
+}
