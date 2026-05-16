@@ -1,8 +1,7 @@
+import type { AuthInstance } from '@server/lib/auth'
+import type { AppContext } from '@server/types'
 import { createMiddleware } from 'hono/factory'
 import { HTTPException } from 'hono/http-exception'
-
-import type { AuthInstance } from '@/lib/auth'
-import type { AppContext } from '@/types'
 
 export function createSessionGuard(auth: AuthInstance) {
   return createMiddleware<AppContext>(async (c, next) => {

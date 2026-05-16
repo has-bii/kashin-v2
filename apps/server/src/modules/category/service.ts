@@ -1,12 +1,12 @@
 import { prisma } from '@kashin/database'
 import { HTTPException } from 'hono/http-exception'
 
-import type { CreateCategoryInput, UpdateCategoryInput } from './schemas'
+import type { CreateCategoryInput, GetCategoryInput, UpdateCategoryInput } from './schemas'
 
 export abstract class CategoryService {
-  static async list(userId: string) {
+  static async list(userId: string, query: GetCategoryInput) {
     return prisma.category.findMany({
-      where: { userId },
+      where: { userId, ...query },
       orderBy: { name: 'asc' },
     })
   }

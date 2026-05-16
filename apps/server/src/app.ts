@@ -1,9 +1,8 @@
+import type { ServerConfig } from '@server/config'
+import type { AppModule } from '@server/types'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-
-import type { ServerConfig } from '@/config'
-import type { AppModule } from '@/types'
 
 export function createApp(config: ServerConfig, modules: AppModule[]) {
   const app = new Hono()

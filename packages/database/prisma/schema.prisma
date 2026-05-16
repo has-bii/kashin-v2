@@ -126,6 +126,7 @@ model Wallet {
 model Category {
   id                    String                 @id @default(uuid(7)) @db.Uuid
   name                  String
+  type                  TransactionType
   icon                  String?
   color                 String?
   userId                String                 @db.Uuid

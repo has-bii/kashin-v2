@@ -55,6 +55,12 @@
         "@types/bun": "latest",
       },
     },
+    "packages/api": {
+      "name": "@kashin/api",
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+    },
     "packages/database": {
       "name": "@kashin/database",
       "version": "0.0.0",
@@ -79,8 +85,12 @@
     "packages/features": {
       "name": "@kashin/features",
       "dependencies": {
+        "@kashin/api": "workspace:*",
+        "@kashin/ui": "workspace:*",
         "@tabler/icons-react": "^3.44.0",
+        "@tanstack/react-query": "^5.100.10",
         "better-auth": "^1.6.11",
+        "hono": "^4.12.18",
         "react": "^19.2.6",
         "react-dom": "^19.2.6",
       },
@@ -462,6 +472,8 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
+
+    "@kashin/api": ["@kashin/api@workspace:packages/api"],
 
     "@kashin/database": ["@kashin/database@workspace:packages/database"],
 

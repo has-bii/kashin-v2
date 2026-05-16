@@ -1,22 +1,18 @@
 {
   "compilerOptions": {
     "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
-
-    "skipLibCheck": true,
 
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
+    "skipLibCheck": true,
 
     "baseUrl": ".",
     "paths": {
-      "@server/*": ["src/*"],
-      "@kashin/database/*": ["../../packages/database/src/*"],
+      "@server/*": ["../../apps/server/src/*"],
     },
   },
   "include": ["src"],
-  "exclude": ["dist", "node_modules"],
+  "exclude": ["node_modules"],
 }

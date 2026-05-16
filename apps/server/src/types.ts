@@ -1,6 +1,5 @@
+import type { AuthInstance } from '@server/lib/auth'
 import type { Hono } from 'hono'
-
-import type { AuthInstance } from '@/lib/auth'
 
 type SessionData = AuthInstance['$Infer']['Session']
 

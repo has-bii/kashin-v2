@@ -1,6 +1,5 @@
+import type { AuthInstance } from '@server/lib/auth'
 import { Hono } from 'hono'
-
-import type { AuthInstance } from '@/lib/auth'
 
 export function createAuthModule(auth: AuthInstance) {
   const router = new Hono()

@@ -1,8 +1,7 @@
 import { prisma } from '@kashin/database/client'
+import type { AuthConfig } from '@server/config'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { betterAuth } from 'better-auth/minimal'
-
-import type { AuthConfig } from '@/config'
 
 export function createAuth(config: AuthConfig) {
   return betterAuth({
