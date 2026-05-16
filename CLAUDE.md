@@ -1,5 +1,5 @@
 ---
-generated: 2026-05-15T14:50:00.000Z
+generated: 2026-05-16T00:00:00.000Z
 ---
 
 ## Project Overview
@@ -16,7 +16,7 @@ Kashin is an AI-powered personal finance tracker (solo user, mobile-first). AI e
 
 ### Tech Stack
 
-Bun monorepo: Hono server, React/Vite mobile, Prisma/PostgreSQL DB, better-auth (Google OAuth).
+Bun monorepo: Hono server, React/Vite mobile, Prisma/PostgreSQL DB, better-auth (Google OAuth), TanStack Query.
 
 ---
 
@@ -51,8 +51,8 @@ Bun monorepo: Hono server, React/Vite mobile, Prisma/PostgreSQL DB, better-auth 
 - **Install**: `bun install` — never `npm install`
 - **Test**: `bun test` / `vitest run`
 - **Workspace filter**: `bun run --filter <pkg> <script>`
-- **Server**: Hono + better-auth + Prisma (PostgreSQL)
-- **Mobile**: React 19 + Vite + TanStack Router + shadcn/ui
+- **Server**: Hono + better-auth + Prisma (PostgreSQL), modular architecture
+- **Mobile**: React 19 + Vite + TanStack Router + TanStack Query + shadcn/ui
 - **UI**: Tailwind v4, radix-vega, Tabler icons, Inter font
 
 ## Do Not
@@ -64,4 +64,4 @@ Bun monorepo: Hono server, React/Vite mobile, Prisma/PostgreSQL DB, better-auth 
 
 ## Docs Last Generated
 
-2026-05-15 — re-run codebase-cartographer skill if stale (> 7 days).
+2026-05-16 — re-run codebase-cartographer skill if stale (> 7 days).

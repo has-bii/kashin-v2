@@ -1,5 +1,5 @@
 ---
-generated: 2026-05-15T14:50:00.000Z
+generated: 2026-05-16T00:00:00.000Z
 ---
 
 # Scripts Reference
@@ -27,6 +27,8 @@ generated: 2026-05-15T14:50:00.000Z
 | dev | `bun run --hot src/index.ts` | Hot-reload dev server |
 | build | `bun build src/index.ts --outdir dist --target node` | Build for Node |
 | start | `bun dist/index.js` | Run production build |
+| format | `prettier --write .` | Format server |
+| format:check | `prettier --check .` | Check formatting |
 
 ### mobile
 | Script | Command | What it does |

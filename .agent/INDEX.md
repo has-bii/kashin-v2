@@ -1,5 +1,5 @@
 ---
-generated: 2026-05-15T14:50:00.000Z
+generated: 2026-05-16T00:00:00.000Z
 ---
 
 # Agent Index — Read This First
@@ -9,15 +9,16 @@ Read the relevant doc below for the context you need, then go to the source.
 
 ## Quick Facts
 - **Type**: Bun monorepo
-- **Packages**: 5 (2 apps, 3 libraries)
+- **Packages**: 6 (2 apps, 4 libraries)
 - **Apps**: server (Hono API), mobile (React/Vite web)
-- **Libraries**: @kashin/database (Prisma), @kashin/features (auth), @kashin/ui (shadcn)
+- **Libraries**: @kashin/database (Prisma), @kashin/schema (Zod), @kashin/features (auth + category), @kashin/ui (shadcn)
 - **Main language**: TypeScript (strict)
 - **Test runner**: Vitest (mobile only)
 - **DB**: PostgreSQL via Prisma
 - **Auth**: better-auth (Google OAuth, cookie sessions)
+- **State mgmt**: TanStack Query (mobile)
 - **UI**: shadcn/radix-vega + Tailwind v4 + Tabler icons
-- **Last mapped**: 2026-05-15
+- **Last mapped**: 2026-05-16
 
 ## Navigation
 

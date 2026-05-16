@@ -1,34 +1,34 @@
 ---
-generated: 2026-05-15T14:50:00.000Z
+generated: 2026-05-16T00:00:00.000Z
 ---
 
 # Conventions
 
 ## File & Folder Naming
-- Source files: `kebab-case` (`auth-client.ts`, `require-session.ts`)
-- React components: `PascalCase` files (`LoginPage.tsx`, `CardHeader.tsx`)
-- Directories: `kebab-case` (`middleware/`, `routes/auth`)
-- shadcn components: `kebab-case` in `src/components/ui/` (`button.tsx`, `card.tsx`)
-- Feature modules: `kebab-case` dirs (`auth/components/`)
+- Source files: `kebab-case` (`auth-client.ts`, `require-session.ts`, `prisma-error.ts`)
+- React components: `PascalCase` files (`LoginPage.tsx`, `CardHeader.tsx`, `BalanceCard.tsx`)
+- Directories: `kebab-case` (`middleware/`, `routes/auth`, `modules/category`)
+- shadcn components: `kebab-case` in `src/components/ui/` (`button.tsx`, `card.tsx`, `badge.tsx`)
+- Feature modules: `kebab-case` dirs with `lib/`, `mutation/`, `query/` subdirs (`category/`)
 
 ## Import Paths
-- **server**: `@kashin/database/*` → `../../packages/database/src/*`
+- **server**: `@server/*` → `./src/*`, `@kashin/database/*`, `@kashin/schema/*`
 - **mobile**: `@/*` → `./src/*`, `@kashin/ui/*`, `@kashin/features/*`
-- **features**: `@kashin/features/*` → `./src/*`, `@kashin/ui/*` → `../ui/src/*`
+- **features**: `@kashin/features/*` → `./src/*`, `@kashin/schema/*`, `@kashin/ui/*`
+- **schema**: `@kashin/schema/*` → `./src/*`
 - **ui**: `@kashin/ui/*` → `./src/*`
 - Workspace deps use `workspace:*` protocol
 
 ## TypeScript
 - Strict mode across all packages
-- Target: ES2022 (mobile), ESNext (server, database, features, ui)
+- Target: ES2022 (mobile), ESNext (server, database, features, ui, schema)
 - Module: ESNext / Preserve, bundler resolution
 - Root tsconfig: noUnusedLocals, noUnusedParameters, noImplicitReturns
-- Server: no extra lint flags
-- Database/features/ui: noUncheckedIndexedAccess, noImplicitOverride
+- Database/features/ui/schema: noUncheckedIndexedAccess, noImplicitOverride
 
 ## Testing
 - **mobile**: Vitest (`vitest run`)
-- **server/database/features/ui**: no test scripts yet
+- **server/database/features/ui/schema**: no test scripts yet
 - Test file pattern: not established
 
 ## Code Style
@@ -39,6 +39,7 @@ generated: 2026-05-15T14:50:00.000Z
 
 ## Error Handling
 - Server: Hono `app.onError` → text response with err.message
+- Server: `mapPrismaError()` → maps P2002→409, P2025→404, etc.
 - Auth: `HTTPException(401)` via `requireSession` middleware
 - Database: throws on missing `DATABASE_URL`
 
@@ -50,3 +51,9 @@ generated: 2026-05-15T14:50:00.000Z
 
 ## Git
 - Branch/commit conventions: not detected
+
+## Feature Module Pattern (features pkg)
+- `lib/api.ts` — Hono client helper (fetch wrapper)
+- `mutation/*.mutation.ts` — TanStack Query mutation hooks
+- `query/*.query.ts` — TanStack Query query hooks
+- Uses `@kashin/schema` for type-safe request/response validation
