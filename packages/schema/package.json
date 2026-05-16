@@ -1,0 +1,14 @@
+{
+  "name": "@kashin/schema",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}

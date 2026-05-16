@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@server/*": ["../../apps/server/src/*"],
+      "@kashin/schema/*": ["src/*"],
+    },
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"],
+}
