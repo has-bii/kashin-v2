@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@kashin/api": "workspace:*",
+    "@kashin/schema": "workspace:*",
     "@kashin/ui": "workspace:*",
     "@tabler/icons-react": "^3.44.0",
     "@tanstack/react-query": "^5.100.10",

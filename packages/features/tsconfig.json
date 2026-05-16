@@ -24,7 +24,7 @@
     "baseUrl": ".",
     "paths": {
       "@server/*": ["../../apps/server/src/*"],
-      "@kashin/api/*": ["../api/src/*"],
+      "@kashin/schema/*": ["../schema/src/*"],
       "@kashin/features/*": ["./src/*"],
       "@kashin/ui/*": ["../ui/src/*"],
     },

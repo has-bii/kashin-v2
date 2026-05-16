@@ -1,4 +1,4 @@
-import type { UpdateCategoryInput } from '@server/modules/category/schemas'
+import type { UpdateCategoryInput } from '@kashin/schema/category'
 import { useMutation } from '@tanstack/react-query'
 
 import { categoryApi } from '../lib/api'

@@ -1,4 +1,4 @@
-import type { GetCategoryInput } from '@server/modules/category/schemas'
+import type { GetCategoryInput } from '@kashin/schema/category'
 import { queryOptions } from '@tanstack/react-query'
 
 import { categoryApi } from '../lib/api'

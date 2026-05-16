@@ -1,9 +1,13 @@
 import { zValidator } from '@hono/zod-validator'
+import {
+  createCategorySchema,
+  getCategorySchema,
+  updateCategorySchema,
+} from '@kashin/schema/category'
 import type { AppContext } from '@server/types'
 import { Hono } from 'hono'
 import type { MiddlewareHandler } from 'hono'
 
-import { createCategorySchema, getCategorySchema, updateCategorySchema } from './schemas'
 import { CategoryService } from './service'
 
 export function createCategoryModule(sessionGuard: MiddlewareHandler<AppContext>) {

@@ -15,6 +15,7 @@
     "paths": {
       "@server/*": ["src/*"],
       "@kashin/database/*": ["../../packages/database/src/*"],
+      "@kashin/schema/*": ["../../packages/schema/src/*"],
     },
   },
   "include": ["src"],

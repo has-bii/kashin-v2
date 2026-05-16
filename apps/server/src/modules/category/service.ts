@@ -1,7 +1,10 @@
 import { prisma } from '@kashin/database'
+import type {
+  CreateCategoryInput,
+  GetCategoryInput,
+  UpdateCategoryInput,
+} from '@kashin/schema/category'
 import { HTTPException } from 'hono/http-exception'
-
-import type { CreateCategoryInput, GetCategoryInput, UpdateCategoryInput } from './schemas'
 
 export abstract class CategoryService {
   static async list(userId: string, query: GetCategoryInput) {
